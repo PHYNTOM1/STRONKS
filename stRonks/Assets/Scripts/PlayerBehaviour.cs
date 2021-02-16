@@ -7,7 +7,6 @@ public class PlayerBehaviour : MonoBehaviour
 {
 
     public float moveSpeed = 5f;
-    public float rotSpeed = 40f;
     public float sprintMult = 1.33f;
     private float realSprintMult = 1f;
 
@@ -35,19 +34,7 @@ public class PlayerBehaviour : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Quaternion _rot;
-
-        if (movement.y < 0)
-        {
-            _rot = Quaternion.Euler(new Vector3(gameObject.transform.rotation.eulerAngles.x, gameObject.transform.rotation.eulerAngles.y + (-movement.x * rotSpeed * 100f * Time.deltaTime), gameObject.transform.rotation.eulerAngles.z));
-        }
-        else
-        {
-            _rot = Quaternion.Euler(new Vector3(gameObject.transform.rotation.eulerAngles.x, gameObject.transform.rotation.eulerAngles.y + (movement.x * rotSpeed * 100f * Time.deltaTime), gameObject.transform.rotation.eulerAngles.z));
-        }
-        gameObject.transform.rotation = _rot;
-
-        rb.MovePosition(gameObject.transform.position + (gameObject.transform.forward * movement.y * moveSpeed * realSprintMult * Time.deltaTime));
+        rb.velocity = new Vector3(movement.x, 0f, movement.y) * moveSpeed * realSprintMult * 10f * Time.deltaTime;
     }
 
 
